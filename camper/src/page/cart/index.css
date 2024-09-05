@@ -1,0 +1,28 @@
+.scrollable::-webkit-scrollbar{
+    width: 5px;
+}
+.navigationIcons{
+    background-color: #006DAB;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+.slides{
+    background-color: white;
+    padding-inline: 70px;
+    box-sizing: content-box;
+    background-repeat: no-repeat;
+    /* margin: 50px; */
+    @media (max-width: 1300px){
+        width: 100%;
+    }
+}
+.slideContainer{
+    position: relative;
+    @media (max-width: 1300px){
+        width: 600px;
+    }
+}

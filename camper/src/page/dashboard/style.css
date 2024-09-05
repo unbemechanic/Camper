@@ -1,0 +1,7 @@
+.tent-icon {
+    filter: invert(100%) /* sepia(10%) */ saturate(1000%) /* hue-rotate(10deg) */;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+}
+

@@ -1,0 +1,118 @@
+#app {
+    height: 100%;
+  }
+  html,
+  body {
+    position: relative;
+    height: 100%;
+  }
+  
+  body {
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+  
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .swiper-slide img {
+    display: block;
+    width: 250px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    
+  }
+  .mySwiper{
+    padding-top: 110px;
+    margin-inline: auto;
+
+  }
+  
+  .inDiv{
+    margin-left: 10px;
+  }
+  .campingTitle{
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding-bottom: 20px;
+}
+.info{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    gap: 20px;
+    margin: 20px 0;
+    width: 600px;
+    color: var(--text, #373737);
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.mapImg{
+    margin: 100px;
+}
+.description{
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  padding-bottom: 30px;
+  p{
+    color: var(--text, #373737);
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+.paragraph{
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  span{
+    color: #FF7A00;
+  }
+}
+.mapSec{
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+  color: var(--blue, #006DAB);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  button{
+    color: #FF7A00;
+    border: 1px solid #FF7A00;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
