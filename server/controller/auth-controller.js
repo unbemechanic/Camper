@@ -47,6 +47,7 @@ const LogIn = async(req, res) => {
         if(emailExist && (await emailExist.matchPassword(password))){
             res.status(201).json({
                 _id: emailExist._id,
+                name: emailExist.name,
                 email: emailExist.email,
                 token: generateToken(emailExist._id)
             })

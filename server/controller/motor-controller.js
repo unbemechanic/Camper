@@ -7,13 +7,10 @@ const jwt = require('jsonwebtoken');
 const AddData = (req, res) => {
     try {
         const {name, company, type, license, passanger, date, cost, location, rating} = req.body;
-        console.log("15")
         const MotorModel = new Motor({name, company, type, license, passanger, date, cost, location, rating}); // connecting to model of motor in firt line
         MotorModel.save();
-        console.log("18")
         console.log(`info added: name: ${name}, company${company}, passanger:${passanger},  `);
         res.status(201).json({message: 'Data added Successfully', MotorModel/* , token:generateToken(user._id) */}) 
-        console.log("21")
     } catch (error) {
         res.status(404).json({message:'Error in adding data', error})
     }
@@ -32,9 +29,9 @@ const GetData = async (req, res) => {
 
 const EditData = async (req, res) => {
     try {
-     const { name } = req.params;
+     const { id } = req.params;
     const { newName, newCompany, newLicense, newPassanger, newCost, newType, newDate, newRating, newLocation} = req.body;
-    const motorName = await Motor.findOne({name});
+    const motorName = await Motor.findById(id);
     if(motorName){
         motorName.name = newName || motorName.name;
         motorName.company = newCompany || motorName.company;
@@ -45,23 +42,23 @@ const EditData = async (req, res) => {
         motorName.date= newDate|| motorName.date
         motorName.rating= newRating|| motorName.rating
         motorName.location= newLocation|| motorName.location
-        motorName.save()
-        console.log(`edited name is , changed name is ${motorName.name}`);
+        await motorName.save()
+        console.log(`edited name is ${motorName.name}, changed name is ${motorName.id}`);
         res.status(200).json({message:'Updated', motorName})
     }else{
         res.status(404).json({message:'not found'})
     }   
     } catch (error) {
         console.error('error to edit data from api', error)
-        
+        res.status(500).json({ message: 'Internal server error' })
     }
     
 }
 
 const DeleteData = async (req, res) => {
     try {
-     const { name } = req.params;
-    const motor = await Motor.findOneAndDelete({name})
+     const { id } = req.params;
+    const motor = await Motor.findByIdAndDelete(id);
     if(motor){
        console.log('data is deleted')
        res.status(200).json({message:`Deleted data is ${motor}`});

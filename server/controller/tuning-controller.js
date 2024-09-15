@@ -1,10 +1,10 @@
 const Tuning = require('../model/tuning')
 
-const AddData = (req, res) => {
+const AddData = async (req, res) => {
     try {
         const {name, company, type, license, passanger, date, cost, location, rating} = req.body;
         const TuningModel = new Tuning({name, company, type, license, passanger, date, cost, location, rating}); // connecting to model of motor in firt line
-        TuningModel.save();
+        await TuningModel.save();
         console.log(`info added: name: ${name}, company${company}, passanger:${passanger},  `);
         res.status(201).json({message: 'Data added Successfully', TuningModel}) 
     } catch (error) {
@@ -25,9 +25,9 @@ const GetData = async (req, res) => {
 
 const EditData = async (req, res) => {
     try {
-     const { name } = req.params;
+     const { id } = req.params;
     const { newName, newCompany, newLicense, newPassanger, newCost, newType, newDate, newRating, newLocation} = req.body;
-    const tuningName = await Tuning.findOne({name});
+    const tuningName = await Tuning.findById(id);
     if(tuningName){
         tuningName.name = newName || tuningName.name;
         tuningName.company = newCompany || tuningName.company;
@@ -38,7 +38,7 @@ const EditData = async (req, res) => {
         tuningName.date= newDate|| tuningName.date
         tuningName.rating= newRating|| tuningName.rating
         tuningName.location= newLocation|| tuningName.location
-        tuningName.save()
+        await tuningName.save()
         console.log(`edited name is , changed name is ${tuningName.name}`);
         res.status(200).json({message:'Updated', tuningName})
     }else{
@@ -53,8 +53,8 @@ const EditData = async (req, res) => {
 
 const DeleteData = async (req, res) => {
     try {
-     const { name } = req.params;
-    const tuning = await Tuning.findOneAndDelete({name})
+     const { id } = req.params;
+    const tuning = await Tuning.findByIdAndDelete(id)
     if(tuning){
        console.log('data is deleted')
        res.status(200).json({message:`Deleted data is ${tuning}`});

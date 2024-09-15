@@ -32,7 +32,7 @@ export default function MotorAddModal({ onSubmit, names, handlers }) {
     type,
     date,
     location,
-    rating,
+    rating
   } = names;
   const {
     onClick,
@@ -112,7 +112,7 @@ export default function MotorAddModal({ onSubmit, names, handlers }) {
                 value={license}
               />
               <ModalInputs
-                type="text"
+                type="number"
                 placeholder="Passangers"
                 name="passanger"
                 onChange={onPassanger}
@@ -127,7 +127,7 @@ export default function MotorAddModal({ onSubmit, names, handlers }) {
               }}
             >
               <ModalInputs
-                type="number"
+                type="text"
                 placeholder="Manufactured date"
                 name="date"
                 onChange={onDate}
@@ -167,37 +167,42 @@ export default function MotorAddModal({ onSubmit, names, handlers }) {
     </div>
   );
 }
-export function CaravanAddModal({ onSubmit, names, handlers }) {
+
+
+export function CaravanAddModal({ onSubmit, names = {}, handlers = {} }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const {
-    name,
-    company,
-    license,
-    cost,
-    passanger,
-    type,
-    date,
-    location,
-    rating,
+    name = '',
+    company = '',
+    license = '',
+    cost = '',
+    passanger = '',
+    type = '',
+    date = '',
+    location = '',
+    rating = '',
   } = names;
+
   const {
-    onClick,
-    onCompany,
-    onLicense,
-    onPassanger,
-    onCost,
-    onDate,
-    onType,
-    onRating,
-    onLocation,
+    onClick = () => {},
+    onCompany = () => {},
+    onLicense = () => {},
+    onPassanger = () => {},
+    onCost = () => {},
+    onDate = () => {},
+    onType = () => {},
+    onRating = () => {},
+    onLocation = () => {},
   } = handlers;
+
   return (
     <div>
       <AddDataButton onClick={handleOpen}>Add data</AddDataButton>
       <Modal
-        style={{ zIndex: "99999" }}
+        style={{ zIndex: 99999 }}
         keepMounted
         open={open}
         onClose={handleClose}
@@ -241,8 +246,9 @@ export function CaravanAddModal({ onSubmit, names, handlers }) {
             <ModalInputs
               type="text"
               placeholder="Car type"
-              value={type}
+              name="type"
               onChange={onType}
+              value={type}
             />
             <div
               style={{
@@ -292,21 +298,21 @@ export function CaravanAddModal({ onSubmit, names, handlers }) {
               type="text"
               placeholder="Location"
               name="location"
-              value={location}
               onChange={onLocation}
+              value={location}
             />
             <ModalInputs
               type="text"
               placeholder="Rating"
               name="rating"
-              value={rating}
               onChange={onRating}
+              value={rating}
             />
             <ModalInputs
               $submit
               type="submit"
               value="Add"
-              onClick={() => setOpen(false)}
+              onClick={handleClose}
             />
           </form>
         </Box>
@@ -314,6 +320,7 @@ export function CaravanAddModal({ onSubmit, names, handlers }) {
     </div>
   );
 }
+
 export function TuningAddModal({ onSubmit, names, handlers }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);

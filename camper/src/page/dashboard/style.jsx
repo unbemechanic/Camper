@@ -8,6 +8,7 @@ export const AddDataButton = styled.button`
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
+    white-space: nowrap;
 `
 
 export const ModalImg = styled.div`
@@ -152,7 +153,7 @@ export const Buttons = styled.button`
 export const Logout = styled.button`
     cursor: pointer;
     height: 44px;
-    width: 190px;
+    width: 150px;
     display: flex;
     align-items: center;
     padding-left: 20px;
@@ -165,6 +166,8 @@ export const Logout = styled.button`
     color: white;
     font-family: Montserrat;
     font-weight: 500;
+    transition: 0.5s ease-in-out;
+    white-space: nowrap;
     &:hover{
         background-color: red;
         width: 160px;
@@ -238,12 +241,12 @@ export const DataList = styled.div`
     border-radius: 10px;
     /* border: 1px solid rgba(0, 0, 0, 0.2); */
     /* box-shadow: 0.5px 1px 2px 0px rgba(0, 0, 0, 0.5); */
-    height: 600px;
+    height: 95dvh;
     padding: 20px;
     box-sizing: border-box;
     margin-top: 30px;
     background-color: white;
-    margin-top: 120px;
+    /* margin-top: 120px; */
     margin-right: 20px;
 `
 export const TableHead = styled.th`
@@ -261,12 +264,12 @@ export const Table = styled.table`
 export const TableRow = styled.tr`
     border-bottom: 1px solid gray;
     display: grid;
-    justify-content: space-evenly;
-    /* grid-template-columns: ${(props)=>props.$caravan? 'repeat(8, 1fr)':(props)=>props.$camping? '1fr 1fr 8fr ':'0.2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr '} ; */
-    grid-template-columns: ${(props)=> props.$camping ? "25px 90px 90px 100px 100px 40px " :(props)=> props.$user ? '25px 200px 300px 200px' :'25px 90px 90px 100px 80px 90px 90px 70px 100px 70px 100px 100px'} ;
-    /* grid-template-columns: repeat(12, 1fr); */
-
+    justify-content: space-between;
+    grid-template-columns: ${(props)=> props.$camping ? "20px 90px 90px 70px 90px 120px 100px 100px 100px 100px " :(props)=> props.$campingTable ? "20px 90px 90px 70px 90px 45px 45px 100px 100px 100px 100px" :(props)=> props.$user ? '25px 200px 300px 200px' :'30px 90px 90px 100px 80px 90px 90px 70px 100px 70px 100px 100px'} ;
+    cursor: pointer;
     align-items: center;
+    padding-right: 80px;
+    padding-left: 10px;
     
     th{
         padding: 10px;
@@ -280,8 +283,9 @@ export const TableRow = styled.tr`
 `
 export const ScrollSec = styled.div`
     overflow-y: scroll;
-    height: 500px;
+    height: 95%;
     scrollbar-width: none;
+    /* background-color: red; */
 `
 export const UpdateButton = styled.button`
     width: 100px;
@@ -317,7 +321,7 @@ export const Drawwer = styled.img`
     border-radius: 3px;
     background: #1d2c49;
     position: absolute;
-    right: -40px;
+    right: -15px;
     z-index: 999999;
     top: 25px;
     transition: all .5s ease-in-out;
@@ -336,6 +340,8 @@ export const FilterButton = styled.div`
     gap: 5px;
     justify-content: center;
     margin-right: 10px;
+    white-space: nowrap;
+    padding-inline: 10px;
 `
 
 export const ButtonIcons = styled.div`

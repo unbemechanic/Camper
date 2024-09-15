@@ -1,10 +1,10 @@
 const Camping = require('../model/camping')
 
-const AddData = (req, res) => {
+const AddData = async (req, res) => {
     try {
         const {name, company, type, license, passanger, date, cost, location, rating} = req.body;
         const CampingModel = new Camping({name, company, type, license, passanger, date, cost, location, rating}); // connecting to model of motor in firt line
-        CampingModel.save();
+        await CampingModel.save();
         console.log(`info added: name: ${name}, company${company}, passanger:${passanger},  `);
         res.status(201).json({message: 'Data added Successfully', CampingModel}) 
     } catch (error) {
@@ -25,9 +25,9 @@ const GetData = async (req, res) => {
 
 const EditData = async (req, res) => {
     try {
-     const { name } = req.params;
+     const { id } = req.params;
     const { newName, newCompany, newLicense, newPassanger, newCost, newType, newDate, newRating, newLocation} = req.body;
-    const campingName = await Camping.findOne({name});
+    const campingName = await Camping.findById(id);
     if(campingName){
         campingName.name = newName || campingName.name;
         campingName.company = newCompany || campingName.company;
@@ -38,7 +38,7 @@ const EditData = async (req, res) => {
         campingName.date= newDate|| campingName.date
         campingName.rating= newRating|| campingName.rating
         campingName.location= newLocation|| campingName.location
-        campingName.save()
+        await campingName.save()
         console.log(`edited name is , changed name is ${campingName.name}`);
         res.status(200).json({message:'Updated', campingName})
     }else{
@@ -53,8 +53,8 @@ const EditData = async (req, res) => {
 
 const DeleteData = async (req, res) => {
     try {
-     const { name } = req.params;
-    const camping = await Camping.findOneAndDelete({name})
+     const { id } = req.params;
+    const camping = await Camping.findByIdAndDelete(id)
     if(camping){
        console.log('data is deleted')
        res.status(200).json({message:`Deleted data is ${camping}`});

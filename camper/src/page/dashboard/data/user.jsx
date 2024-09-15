@@ -107,20 +107,18 @@ const UserData = () => {
         </DataControl>
         <ScrollSec>
           <Table>
-            <TableRow $user
-              style={{ position: "sticky", top: "0", backgroundColor: "white" }}
-            >
-              <th style={{display:'flex',marginLeft:'-40px'}}>No.</th>
+            <TableRow>
+              <th style={{display:'flex'}}>No.</th>
               <th>User</th>
               <th>Email</th>
               <th>Edit/Delete</th>
             </TableRow>
             {data.map((value, index) => {
               return (
-                <TableRow $user key={index}>
+                <TableRow  key={index}>
                   {update[index] ? (
                     <>
-                      <td style={{display:'flex',marginLeft:'0px'}}>{index + 1}</td>
+                      <td>1</td>
                       <td>
                         <UpdateInputs
                           type="text"

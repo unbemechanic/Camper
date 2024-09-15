@@ -1,10 +1,10 @@
 const UsedCar = require('../model/used-car')
 
-const AddData = (req, res) => {
+const AddData = async (req, res) => {
     try {
         const {name, company, type, license, passanger, date, cost, location, rating} = req.body;
         const UsedCarModel = new UsedCar({name, company, type, license, passanger, date, cost, location, rating}); // connecting to model of motor in firt line
-        UsedCarModel.save();
+        await UsedCarModel.save();
         console.log(`info added: name: ${name}, company${company}, passanger:${passanger},  `);
         res.status(201).json({message: 'Data added Successfully', UsedCarModel}) 
     } catch (error) {
@@ -25,9 +25,9 @@ const GetData = async (req, res) => {
 
 const EditData = async (req, res) => {
     try {
-     const { name } = req.params;
+     const { id } = req.params;
     const { newName, newCompany, newLicense, newPassanger, newCost, newType, newDate, newRating, newLocation} = req.body;
-    const usedCarName = await UsedCar.findOne({name});
+    const usedCarName = await UsedCar.findById(id);
     if(usedCarName){
         usedCarName.name = newName || usedCarName.name;
         usedCarName.company = newCompany || usedCarName.company;
@@ -53,8 +53,8 @@ const EditData = async (req, res) => {
 
 const DeleteData = async (req, res) => {
     try {
-     const { name } = req.params;
-    const usedCar = await UsedCar.findOneAndDelete({name})
+     const { id } = req.params;
+    const usedCar = await UsedCar.findByIdAndDelete(id)
     if(usedCar){
        console.log('data is deleted')
        res.status(200).json({message:`Deleted data is ${usedCar}`});

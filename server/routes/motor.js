@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.post('/motor',protect, AddData);
 router.get('/motor', GetData)
-router.put('/motor/:name', EditData);
-router.delete('/motor/:name', DeleteData)
+router.put('/motor/:id', protect, EditData);
+router.delete('/motor/:id',protect, DeleteData)
 router.delete('/deleteAll', AllDelete)
 
 module.exports = router

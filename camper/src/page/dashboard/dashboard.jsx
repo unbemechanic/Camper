@@ -156,21 +156,11 @@ const Dashboard = () => {
         {/* <Link to="/" style={{ textDecoration: "none", color: "white" }}> */}
           <Logout style={{width: toggle ? '':'70px'}} onClick={logOutToken}>
             <OutputIcon sx={{width:'35px',height:'35px'}}/>
-            <p style={{display: toggle ? '' : 'none'}}>Log out</p> 
+            <p style={{opacity: toggle ? '1' : '0', transition: "0.5s ease-in-out"}}>Log out</p> 
           </Logout>
         {/* </Link> */}
       </Tabs>
       <Content className="content">
-        <Controller>
-          
-          <div>
-            <NotificationsNoneOutlinedIcon fontSize="large" />
-          </div>
-          <Profile>
-            <ProfileLogo width={50} src={ProfileImg} alt="" />
-            <p>Jack William</p>
-          </Profile>
-        </Controller>
         {activeTab === "Motor" && <MotorData />}
         {activeTab === "Caravan" && <CaravanData />}
         {activeTab === "Tuning" && <TuningData />}

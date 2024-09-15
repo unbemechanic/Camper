@@ -36,7 +36,7 @@ const MotorData = () => {
   const [passanger, setPassanger] = useState();
   const [cost, setcost] = useState();
   const [type, setType] = useState();
-  const [date, setDate] = useState();
+  const [date, setDate] = useState('');
   const [rating, setRating] = useState();
   const [location, setLocation] = useState();
   const [newName, setNewName] = useState();
@@ -53,7 +53,6 @@ const MotorData = () => {
 
   const fetchData = async () => {
     try {
-      // console.log("checking if token is alright",token)
       const response = await fetch("http://localhost:5500/motor", {
         headers:{
           Authorization: `Bearer ${token}`
@@ -64,7 +63,8 @@ const MotorData = () => {
       }
       const motor = await response.json();
       setData(motor)
-      console.log(data) 
+      setFilteredData(motor)
+      console.log(motor) 
       
     } catch (error) {
       console.log("failed to fetch data", error);
@@ -74,9 +74,7 @@ const MotorData = () => {
     fetchData()
   }, [token]);
 
-  useEffect(()=>{
-    setFilteredData(data)
-  }, [data]);
+
 
    
   const handleSubmit = async (event) => {
@@ -128,7 +126,6 @@ const MotorData = () => {
   
   //filter
   const handleSearch = (query) => {
-    console.log('data is ', data)
     if(query && typeof query === "string"){
       const filtered = Array.isArray(data) ? data.filter((motor) => {
        return motor.name && typeof motor.name === "string" && motor.name.toLowerCase().includes(query.toLowerCase()); 
@@ -148,12 +145,15 @@ const MotorData = () => {
   };
 
  
-
-  const handleEdit = async (oldname) => {
+  const handleEdit = async (id) => {
     try {
-      const response = await axios.put(
-        `http://localhost:5500/motor/${oldname}`,
-        {
+      const res = await fetch(`http://localhost:5500/motor/${id}`,{
+        method:'PUT',
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
           newName,
           newCompany,
           newLicense,
@@ -163,24 +163,36 @@ const MotorData = () => {
           newDate,
           newRating,
           newLocation,
-        }
-      );
+        })
+      })
+      console.log(newName)
       setNewName("");
       fetchData();
     } catch (error) {
       console.error("error editing");
     }
-  };
+  }
 
-  const handleDelete = async (name) => {
+  const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5500/motor/${name}`
-      );
+        const response = await fetch(`http://localhost:5500/motor/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+        });
+        if (response.ok) {
+            console.log('Data deleted successfully');
+            fetchData();
+        } else {
+            console.error('Failed to delete data');
+        }
     } catch (error) {
-      console.error(error);
+        console.error('Error:', error);
     }
-  };
+};
+
   const handleClick = (index) => {
     const newEditMode = [...update];
     newEditMode[index] = !newEditMode[index];
@@ -189,15 +201,13 @@ const MotorData = () => {
   const handleChangeNewName = (e) => {
     setNewName(e.target.value);
   };
-  const handleChangeNewNameChange = (e) => {
-    setNewName(name);
-  };
+
 
   return (
     <div>
       <DataList className="tablet">
         <DataControl>
-          <b>Car list</b>
+          <h2>Motor list</h2>
           <InputsDiv>
             <Input
               type="text"
@@ -206,11 +216,9 @@ const MotorData = () => {
             />
             <SearchIcon />
           </InputsDiv>
-
           <FilterButton>
             <SortOutlinedIcon /> Filter
           </FilterButton>
-
           <MotorAddModal
             onSubmit={handleSubmit}
             names = {{
@@ -230,7 +238,7 @@ const MotorData = () => {
               onLicense: handleChange(setLicense),
               onPassanger: handleChange(setPassanger),
               onCost: handleChange(setcost),
-              onDate: handleChange(setData),
+              onDate: handleChange(setDate),
               onType: handleChange(setType),
               onRating: handleChange(setRating),
               onLocation: handleChange(setLocation)
@@ -258,7 +266,7 @@ const MotorData = () => {
             </TableRow>
             {filteredData.map((value, index) => {
               return (
-                <TableRow key={index}>
+                <TableRow key={value._id} style={{backgroundColor: index % 2 === 0 ? '#d8d8d836' :'white'}}>
                   {update[index] ? (
                     <>
                       <td>{index + 1}</td>
@@ -340,7 +348,7 @@ const MotorData = () => {
                       <td>
                         <UpdateButton
                           onClick={(e) => {
-                            handleEdit(value.name);
+                            handleEdit(value._id);
                             handleClick(index);
                           }}
                         >
@@ -374,7 +382,7 @@ const MotorData = () => {
                           <EditIcon sx={{ fill: "white" }} />
                         </EditButtonDiv>
                         <DeleteButtonDiv
-                          onClick={() => handleDelete(value.name)}
+                          onClick={() => {handleDelete(value._id); console.log("id hsould be deleted",value._id)}}
                         >
                           <DeleteIcon sx={{ fill: "white" }} />
                         </DeleteButtonDiv>

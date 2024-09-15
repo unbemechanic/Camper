@@ -25,9 +25,9 @@ const GetData = async (req, res) => {
 
 const EditData = async (req, res) => {
     try {
-     const { name } = req.params;
+     const { id } = req.params;
     const { newName, newCompany, newLicense, newPassanger, newCost, newType, newDate, newRating, newLocation} = req.body;
-    const caravanName = await Caravan.findOne({name});
+    const caravanName = await Caravan.findById(id);
     if(caravanName){
         caravanName.name = newName || caravanName.name;
         caravanName.company = newCompany || caravanName.company;
@@ -38,8 +38,8 @@ const EditData = async (req, res) => {
         caravanName.date= newDate|| caravanName.date
         caravanName.rating= newRating|| caravanName.rating
         caravanName.location= newLocation|| caravanName.location
-        caravanName.save()
-        console.log(`edited name is , changed name is ${caravanName.name}`);
+        await caravanName.save()
+        console.log(`edited name is , changed name is ${caravanName.id}`);
         res.status(200).json({message:'Updated', caravanName})
     }else{
         res.status(404).json({message:'not found'})
@@ -53,8 +53,8 @@ const EditData = async (req, res) => {
 
 const DeleteData = async (req, res) => {
     try {
-     const { name } = req.params;
-    const caravan = await Caravan.findOneAndDelete({name})
+     const { id } = req.params;
+    const caravan = await Caravan.findByIdAndDelete(id)
     if(caravan){
        console.log('data is deleted')
        res.status(200).json({message:`Deleted data is ${caravan}`});
